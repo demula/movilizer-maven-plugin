@@ -1911,7 +1911,7 @@
   </wsdl:binding>
   <wsdl:service name="MovilizerWebServiceV12Service" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
     <wsdl:port binding="tns:MovilizerWebServiceV12Soap11" name="MovilizerWebServiceV12Soap11" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
-      <soap:address location="http://demo.movilizer.com:80/MovilizerDistributionService/WebService/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+      <soap:address location="${movilizer.webservice.address}" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
     </wsdl:port>
   </wsdl:service>
 </wsdl:definitions>
