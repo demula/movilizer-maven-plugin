@@ -1,28 +1,61 @@
 package com.movilizer.plugins.maven;
 
+import com.movilizer.plugins.maven.messages.EN;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Displays the plugin info to the user.
  */
 @Mojo(name = "info")
 public class InfoMojo extends AbstractMojo {
-    private static final Logger logger = LoggerFactory.getLogger(InfoMojo.class);
 
     /**
-     * The greeting to display.
+     * Request folder.
      */
-    @Parameter( property = "info.greeting", defaultValue = "Hello World!" )
-    private String greeting;
+    @Parameter(property = "requestFolder", defaultValue = DefaultValues.REQUEST_FOLDER)
+    private String requestFolder;
+
+    /**
+     * File name of the request.
+     */
+    @Parameter(property = "defaultFilename", defaultValue = DefaultValues.REQUEST_FILE_NAME)
+    private String requestFilename;
+
+    /**
+     * Web service address.
+     */
+    @Parameter(property = "webServiceAddress", defaultValue = DefaultValues.WEBSERVICE_ADDRESS)
+    private String webServiceAddress;
+
+    /**
+     * Set system id and password from properties.
+     */
+    @Parameter(property = "credentials.fill", defaultValue = "true")
+    private String fillCredentials;
+
+    /**
+     * System id for the requests.
+     */
+    @Parameter(property = "credentials.systemId", defaultValue = "")
+    private String systemId;
+
+    /**
+     * Password for the system id of the requests.
+     */
+    @Parameter(property = "credentials.password", defaultValue = "")
+    private String password;
 
     @Override
     public void execute() throws MojoExecutionException {
-        logger.debug("Executing goal info from " + InfoMojo.class);
-        getLog().info(greeting);
+        getLog().info(String.format(EN.INFO_MESSAGE,
+                webServiceAddress,
+                systemId,
+                password,
+                fillCredentials,
+                requestFolder,
+                requestFilename));
     }
 }

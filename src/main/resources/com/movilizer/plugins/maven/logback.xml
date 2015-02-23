@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<configuration>
-    <include resource="com/movilizer/plugins/maven/logging/base.xml"/>
-    <logger name="com.movilizer" level="${logging.level}"/>
-</configuration>

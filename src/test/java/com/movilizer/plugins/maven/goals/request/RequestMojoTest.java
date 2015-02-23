@@ -1,5 +1,6 @@
-package com.movilizer.plugins.maven;
+package com.movilizer.plugins.maven.goals.request;
 
+import com.movilizer.plugins.maven.InfoMojo;
 import org.apache.maven.plugin.testing.AbstractMojoTestCase;
 import org.junit.Before;
 import org.junit.Test;
@@ -15,22 +16,18 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 
 @RunWith(JUnit4.class)
-public class InfoMojoTest extends AbstractMojoTestCase {
-    private static final Logger logger = LoggerFactory.getLogger(InfoMojoTest.class);
+public class RequestMojoTest extends AbstractMojoTestCase {
     private static final String TEST_POM_FILE_PATH = "src/test/resources/unit/basic-test/basic-test-plugin-config.xml";
-    private static final String TEST_MAVEN_GOAL = "info";
-
+    private static final String TEST_MAVEN_GOAL = "request";
 
     @Before
-    protected void setUp() throws Exception {
+    public void setUp() throws Exception {
         // required for mojo lookups to work
         super.setUp();
-        logger.debug("InfoMojoTest setup complete");
     }
 
     @Test
-    public void testMojoInfoGoal() throws Exception {
-        logger.debug("Running testMojoInfoGoal()");
+    public void testMojoRequestGoal() throws Exception {
         File testPom = new File(getBasedir(), TEST_POM_FILE_PATH);
         InfoMojo mojo = (InfoMojo) lookupMojo(TEST_MAVEN_GOAL, testPom);
         assertThat(mojo, is(notNullValue()));

@@ -4,13 +4,17 @@
     <groupId>com.movilizer.test</groupId>
     <artifactId>movilizer-maven-plugin-test</artifactId>
     <packaging>jar</packaging>
-    <version>${project.version}</version>
+    <version>0.1-SNAPSHOT</version>
     <build>
         <plugins>
             <plugin>
                 <groupId>com.movilizer.plugins</groupId>
                 <artifactId>movilizer-maven-plugin</artifactId>
-                <version>${project.version}</version>
+                <version>0.1-SNAPSHOT</version>
+                <configuration>
+                    <systemId>1</systemId>
+                    <password>1337</password>
+                </configuration>
             </plugin>
         </plugins>
     </build>
