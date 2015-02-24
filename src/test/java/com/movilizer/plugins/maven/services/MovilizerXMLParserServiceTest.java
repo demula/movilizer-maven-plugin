@@ -39,7 +39,7 @@ public class MovilizerXMLParserServiceTest {
 
     @Test
     public void testLoadMoveletRequest() throws Exception {
-        MovilizerRequest request = xmlParserService.getRequestFromFile(testRequestDir + testMoveletRequestFilename);
+        MovilizerRequest request = xmlParserService.getRequestFromFile(testRequestDir, testMoveletRequestFilename);
         assertThat(request, is(notNullValue()));
         assertThat(request.getMoveletSet().isEmpty(), is(false));
         assertThat(request.getMoveletSet().size(), is(1));

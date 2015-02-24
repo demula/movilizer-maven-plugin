@@ -15,40 +15,40 @@ public class InfoMojo extends AbstractMojo {
     /**
      * Request folder.
      */
-    @Parameter(property = "requestFolder", defaultValue = DefaultValues.REQUEST_FOLDER)
+    @Parameter(property = "movilizer.requestFolder", defaultValue = DefaultValues.REQUEST_FOLDER)
     private String requestFolder;
 
     /**
      * File name of the request.
      */
-    @Parameter(property = "defaultFilename", defaultValue = DefaultValues.REQUEST_FILE_NAME)
+    @Parameter(property = "movilizer.filename", defaultValue = DefaultValues.REQUEST_FILE_NAME)
     private String requestFilename;
 
     /**
      * Web service address.
      */
-    @Parameter(property = "webServiceAddress", defaultValue = DefaultValues.WEBSERVICE_ADDRESS)
+    @Parameter(property = "movilizer.webServiceAddress", defaultValue = DefaultValues.WEBSERVICE_ADDRESS)
     private String webServiceAddress;
 
     /**
      * Set system id and password from properties.
      */
-    @Parameter(property = "credentials.fill", defaultValue = DefaultValues.FILL_CREDENTIALS)
+    @Parameter(property = "movilizer.credentials.fill", defaultValue = DefaultValues.FILL_CREDENTIALS)
     private String fillCredentials;
 
     /**
      * System id for the requests.
      */
-    @Parameter(property = "credentials.systemId", defaultValue = "")
+    @Parameter(property = "movilizer.credentials.systemId", defaultValue = "")
     private String systemId;
 
     /**
      * Password for the system id of the requests.
      */
-    @Parameter(property = "credentials.password", defaultValue = "")
+    @Parameter(property = "movilizer.credentials.password", defaultValue = "")
     private String password;
 
-    /**
+    /**:
      * Debug mode to print replies in the console output.
      */
     @Parameter(property = "movilizer.debug", defaultValue = DefaultValues.DEBUG)
