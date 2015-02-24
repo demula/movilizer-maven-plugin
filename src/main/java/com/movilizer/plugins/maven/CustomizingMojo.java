@@ -15,10 +15,10 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 
 /**
- * Performs a request to the Movilizer Cloud with the file given.
+ * Creates a request file that contains all icons and customizing options from a theme folder.
  */
-@Mojo(name = "request")
-public class RequestMojo extends AbstractMojo {
+@Mojo(name = "customizing")
+public class CustomizingMojo extends AbstractMojo {
 
     /**
      * Request folder.
@@ -33,28 +33,10 @@ public class RequestMojo extends AbstractMojo {
     private String requestFilename;
 
     /**
-     * Web service address.
+     * File name of the request.
      */
-    @Parameter(property = "movilizer.webServiceAddress", defaultValue = DefaultValues.WEBSERVICE_ADDRESS)
-    private String webServiceAddress;
-
-    /**
-     * Set system id and password from properties.
-     */
-    @Parameter(property = "movilizer.credentials.fill", defaultValue = DefaultValues.FILL_CREDENTIALS)
-    private String fillCredentials;
-
-    /**
-     * System id for the requests.
-     */
-    @Parameter(property = "movilizer.credentials.systemId", defaultValue = "")
-    private String systemId;
-
-    /**
-     * Password for the system id of the requests.
-     */
-    @Parameter(property = "movilizer.credentials.password", defaultValue = "")
-    private String password;
+    @Parameter(property = "movilizer.customizingFolder", defaultValue = DefaultValues.CUSTOMIZING_FOLDER)
+    private String customizingFolder;
 
     /**
      * Debug mode to print replies in the console output.
@@ -65,28 +47,13 @@ public class RequestMojo extends AbstractMojo {
     @Override
     public void execute() throws MojoExecutionException {
         try {
-            MovilizerWebService movilizerWebService = new MovilizerWebService(getLog(), webServiceAddress);
             MovilizerXMLParserService xmlParserService = new MovilizerXMLParserService(getLog(), requestFolder);
             MovilizerRequest request = xmlParserService.getRequestFromFile(requestFolder, requestFilename);
-            if (Boolean.parseBoolean(fillCredentials)) {
-                request = movilizerWebService.prepareRequest(Long.parseLong(systemId), password, request);
-            }
 
             if (Boolean.parseBoolean(debug)) {
                 getLog().info(xmlParserService.printRequest(request));
             }
-
-            MovilizerResponse response = movilizerWebService.getReplyFromCloud(request);
-            if (movilizerWebService.responesHasErrors(response)) {
-                getLog().error(movilizerWebService.prettyPrintErrors(response));
-            } else {
-                getLog().info(EN.SUCCESSFUL_REQUEST);
-            }
-
-            if (Boolean.parseBoolean(debug)) {
-                getLog().info(xmlParserService.printResponse(response));
-            }
-
+            xmlParserService.saveRequestToFile(request, requestFilename);
         } catch (IOException | JAXBException e) {
             throw rethrowException(e);
         }

@@ -9,4 +9,5 @@ public class DefaultValues {
     public static final String REQUEST_FILE_NAME = "default" + MOVILIZER_XML_EXTENSION;
     public static final String FILL_CREDENTIALS = "true";
     public static final String WEBSERVICE_ADDRESS = "http://demo.movilizer.com:80/MovilizerDistributionService/WebService/";
+    public static final String CUSTOMIZING_FOLDER = MOVILIZER_FOLDER + "customizing/";
 }

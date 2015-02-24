@@ -25,6 +25,12 @@ public class InfoMojo extends AbstractMojo {
     private String requestFilename;
 
     /**
+     * File name of the request.
+     */
+    @Parameter(property = "movilizer.customizingFolder", defaultValue = DefaultValues.CUSTOMIZING_FOLDER)
+    private String customizingFolder;
+
+    /**
      * Web service address.
      */
     @Parameter(property = "movilizer.webServiceAddress", defaultValue = DefaultValues.WEBSERVICE_ADDRESS)
@@ -63,6 +69,7 @@ public class InfoMojo extends AbstractMojo {
                 fillCredentials,
                 requestFolder,
                 requestFilename,
+                customizingFolder,
                 debug));
     }
 }

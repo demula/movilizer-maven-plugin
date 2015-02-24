@@ -3,7 +3,6 @@ package com.movilizer.plugins.maven.services;
 
 import com.movilitas.movilizer.v12.MovilizerRequest;
 import com.movilitas.movilizer.v12.MovilizerResponse;
-import com.movilizer.plugins.maven.DefaultValues;
 import org.apache.maven.plugin.logging.Log;
 import org.codehaus.plexus.util.WriterFactory;
 import org.codehaus.plexus.util.xml.XmlStreamWriter;
@@ -11,8 +10,6 @@ import org.codehaus.plexus.util.xml.XmlStreamWriter;
 import javax.xml.bind.*;
 import javax.xml.transform.stream.StreamSource;
 import java.io.*;
-import java.net.URISyntaxException;
-import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -24,12 +21,12 @@ public class MovilizerXMLParserService {
     private Marshaller movilizerRequestMarshaller;
     private Marshaller movilizerResponseMarshaller;
     private final Log mavenOutputLogger;
-    private URL xmlOutputDir = getClass().getResource("resources/");
+    private String xmlOutputDir = "resources/";
 
     public MovilizerXMLParserService(final Log mavenOutputLogger, String xmlOutputDir) throws JAXBException {
         assert mavenOutputLogger != null;
         this.mavenOutputLogger = mavenOutputLogger;
-        if (xmlOutputDir != null) this.xmlOutputDir = getClass().getResource(xmlOutputDir);
+        if (xmlOutputDir != null) this.xmlOutputDir = xmlOutputDir;
 
         movilizerRequestContext = JAXBContext.newInstance(MovilizerRequest.class);
         movilizerRequestMarshaller = movilizerRequestContext.createMarshaller();
@@ -49,7 +46,7 @@ public class MovilizerXMLParserService {
         movilizerResponseMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
     }
 
-    public MovilizerRequest getRequestFromFile(String folder, String filename) throws IOException, URISyntaxException, JAXBException {
+    public MovilizerRequest getRequestFromFile(String folder, String filename) throws IOException, JAXBException {
         Path folderPath = Paths.get(folder);
         if (!Files.isDirectory(folderPath)) {
             mavenOutputLogger.error(String.format("Folder specified is not a directory: %s.", folderPath.toAbsolutePath().toString()));
@@ -79,9 +76,16 @@ public class MovilizerXMLParserService {
         return writer.toString();
     }
 
-    public void saveRequestToFile(MovilizerRequest request, String fileName) throws IOException, URISyntaxException, JAXBException {
-        File newFile = new File(xmlOutputDir + fileName + DefaultValues.MOVILIZER_XML_EXTENSION);
-        newFile.getParentFile().mkdirs();
+    public void saveRequestToFile(MovilizerRequest request, String filename) throws IOException, JAXBException {
+        Path folderPath = Paths.get(xmlOutputDir);
+        if (!Files.isDirectory(folderPath)) {
+            mavenOutputLogger.error(String.format("Folder specified is not a directory: %s.", folderPath.toAbsolutePath().toString()));
+        }
+        Path fullPath = Paths.get(xmlOutputDir, filename);
+        if (!Files.exists(fullPath)) {
+            mavenOutputLogger.error(String.format("request file not found for path: %s.", fullPath.toAbsolutePath().toString()));
+        }
+        File newFile = fullPath.toFile();
         saveRequestToFile(request, newFile);
     }
 

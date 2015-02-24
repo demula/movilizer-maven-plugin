@@ -17,6 +17,7 @@ public class EN {
             "Auto fill credentials in requests: %s\n" +
             "Requests directory: %s\n" +
             "Default request filename: %s\n" +
+            "Customizing directory: %s\n" +
             "Debug mode: %s\n";
     public static final String AUTH_ERROR = "Authentication errors";
     public static final String INCORRECT_CREDENTIALS = "Incorrect credentials for systemId ";
