@@ -44,7 +44,7 @@
 
     <properties>
         <cxf.version>3.0.4</cxf.version>
-        <java.version>1.8</java.version>
+        <java.version>1.7</java.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<movilizer.plugin.prefix>movilizer</movilizer.plugin.prefix>
 		<config.location>com/movilizer/plugins/maven/plugin.properties</config.location>

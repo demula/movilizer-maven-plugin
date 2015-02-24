@@ -33,7 +33,7 @@ public class InfoMojo extends AbstractMojo {
     /**
      * Set system id and password from properties.
      */
-    @Parameter(property = "credentials.fill", defaultValue = "true")
+    @Parameter(property = "credentials.fill", defaultValue = DefaultValues.FILL_CREDENTIALS)
     private String fillCredentials;
 
     /**
@@ -48,6 +48,12 @@ public class InfoMojo extends AbstractMojo {
     @Parameter(property = "credentials.password", defaultValue = "")
     private String password;
 
+    /**
+     * Debug mode to print replies in the console output.
+     */
+    @Parameter(property = "movilizer.debug", defaultValue = DefaultValues.DEBUG)
+    private String debug;
+
     @Override
     public void execute() throws MojoExecutionException {
         getLog().info(String.format(EN.INFO_MESSAGE,
@@ -56,6 +62,7 @@ public class InfoMojo extends AbstractMojo {
                 password,
                 fillCredentials,
                 requestFolder,
-                requestFilename));
+                requestFilename,
+                debug));
     }
 }

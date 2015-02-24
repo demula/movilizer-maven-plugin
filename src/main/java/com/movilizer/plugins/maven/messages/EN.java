@@ -15,5 +15,6 @@ public class EN {
             "Password: %s\n" +
             "Auto fill credentials in requests: %s\n" +
             "Requests directory: %s\n" +
-            "Default request filename: %s\n";
+            "Default request filename: %s\n" +
+            "Debug mode: %s\n";
 }

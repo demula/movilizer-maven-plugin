@@ -13,7 +13,9 @@
                 <version>0.1-SNAPSHOT</version>
                 <configuration>
                     <systemId>1</systemId>
-                    <password>1337</password>
+                    <password>pass</password>
+                    <requestFolder>movilizer/requests/</requestFolder>
+                    <debug>true</debug>
                 </configuration>
             </plugin>
         </plugins>

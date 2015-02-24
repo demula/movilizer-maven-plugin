@@ -4,17 +4,13 @@ import com.movilitas.movilizer.v12.*;
 import com.movilizer.plugins.maven.messages.EN;
 import org.apache.maven.plugin.logging.Log;
 
-import javax.inject.Inject;
-import javax.inject.Singleton;
 import javax.xml.ws.BindingProvider;
 
-@Singleton
 public class MovilizerWebService {
-    private Log mavenOutputLogger;
+    private final Log mavenOutputLogger;
     private MovilizerWebServiceV12 movilizerCloud;
 
-    @Inject
-    public MovilizerWebService(Log mavenOutputLogger, String webServiceAddress) {
+    public MovilizerWebService(final Log mavenOutputLogger, String webServiceAddress) {
         this.mavenOutputLogger = mavenOutputLogger;
         MovilizerWebServiceV12Service service = new MovilizerWebServiceV12Service();
         movilizerCloud = service.getMovilizerWebServiceV12Soap11();

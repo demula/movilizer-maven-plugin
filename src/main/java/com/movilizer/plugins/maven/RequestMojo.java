@@ -41,7 +41,7 @@ public class RequestMojo extends AbstractMojo {
     /**
      * Set system id and password from properties.
      */
-    @Parameter(property = "credentials.fill", defaultValue = "true")
+    @Parameter(property = "credentials.fill", defaultValue = DefaultValues.FILL_CREDENTIALS)
     private String fillCredentials;
 
     /**
@@ -56,28 +56,37 @@ public class RequestMojo extends AbstractMojo {
     @Parameter(property = "credentials.password", defaultValue = "")
     private String password;
 
-    private MovilizerXMLParserService xmlParserService;
-    private MovilizerWebService movilizerWebService;
-
-    public RequestMojo() throws JAXBException {
-        super();
-        movilizerWebService = new MovilizerWebService(getLog(), webServiceAddress);
-        xmlParserService = new MovilizerXMLParserService(getLog(), requestFolder);
-    }
+    /**
+     * Debug mode to print replies in the console output.
+     */
+    @Parameter(property = "movilizer.debug", defaultValue = DefaultValues.DEBUG)
+    private String debug;
 
     @Override
     public void execute() throws MojoExecutionException {
         try {
-            MovilizerRequest request = xmlParserService.getRequestFromFile(requestFolder + requestFilename);
-            if (!"false".equals(fillCredentials)) {
+            MovilizerWebService movilizerWebService = new MovilizerWebService(getLog(), webServiceAddress);
+            MovilizerXMLParserService xmlParserService = new MovilizerXMLParserService(getLog(), requestFolder);
+            MovilizerRequest request = xmlParserService.getRequestFromFile(requestFolder, requestFilename);
+            if (Boolean.parseBoolean(fillCredentials)) {
                 request = movilizerWebService.prepareRequest(Long.parseLong(systemId), password, request);
             }
+
+            if (Boolean.parseBoolean(debug)) {
+                getLog().info(xmlParserService.printRequest(request));
+            }
+
             MovilizerResponse response = movilizerWebService.getReplyFromCloud(request);
             if (movilizerWebService.responesHasErrors(response)) {
                 getLog().error(movilizerWebService.prettyPrintErrors(response));
             } else {
                 getLog().info(EN.SUCCESSFUL_REQUEST);
             }
+
+            if (Boolean.parseBoolean(debug)) {
+                getLog().info(xmlParserService.printResponse(response));
+            }
+
         } catch (IOException | URISyntaxException | JAXBException e) {
             throw rethrowException(e);
         }
