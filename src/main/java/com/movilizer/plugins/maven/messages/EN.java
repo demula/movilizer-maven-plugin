@@ -3,6 +3,7 @@ package com.movilizer.plugins.maven.messages;
 
 public class EN {
     public static final String SUCCESSFUL_REQUEST = "Request succesfully sent to Movilizer";
+    public static final String RESPONSE_HAS_ERRORS = "Last response had the following errors:";
     public static final String DOCUMENT_ERRORS = "Document errors";
     public static final String MASTERDATA_ERRORS = "Masterdata errors";
     public static final String MOVELET_ERRORS = "Movelet errors";
@@ -17,4 +18,6 @@ public class EN {
             "Requests directory: %s\n" +
             "Default request filename: %s\n" +
             "Debug mode: %s\n";
+    public static final String AUTH_ERROR = "Authentication errors";
+    public static final String INCORRECT_CREDENTIALS = "Incorrect credentials for systemId ";
 }

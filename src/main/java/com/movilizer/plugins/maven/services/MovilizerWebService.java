@@ -39,19 +39,26 @@ public class MovilizerWebService {
         if (!response.getDocumentError().isEmpty()) return true;
         if (!response.getMasterdataError().isEmpty()) return true;
         if (!response.getMoveletError().isEmpty()) return true;
+        if (!response.getStatusMessage().isEmpty()) {
+            for (MovilizerStatusMessage message : response.getStatusMessage()) {
+                if (403 == message.getType()) { //System id failed to authenticate
+                    return true;
+                }
+            }
+        }
         return false;
     }
 
     public String prettyPrintErrors(MovilizerResponse response) {
         StringBuilder sb = new StringBuilder();
-        sb.append("\n\n");
+        sb.append(EN.RESPONSE_HAS_ERRORS).append("\n");
         if (!response.getDocumentError().isEmpty()) {
             sb.append(EN.DOCUMENT_ERRORS)
                     .append(" (")
                     .append(String.valueOf(response.getDocumentError().size()))
                     .append(")\n");
             for (MovilizerDocumentError error : response.getDocumentError()) {
-                sb.append("ERROR")
+                sb.append("  - ")
                         .append(error.getValidationErrorCode())
                         .append(": ")
                         .append(error.getMessage())
@@ -64,7 +71,7 @@ public class MovilizerWebService {
                     .append(String.valueOf(response.getMasterdataError().size()))
                     .append(")\n");
             for (MovilizerMasterdataError error : response.getMasterdataError()) {
-                sb.append("ERROR")
+                sb.append("  - ")
                         .append(error.getValidationErrorCode())
                         .append(": ")
                         .append(error.getMessage())
@@ -77,11 +84,24 @@ public class MovilizerWebService {
                     .append(String.valueOf(response.getMoveletError().size()))
                     .append(")\n");
             for (MovilizerMoveletError error : response.getMoveletError()) {
-                sb.append("ERROR")
+                sb.append("  - ")
                         .append(error.getValidationErrorCode())
                         .append(": ")
                         .append(error.getMessage())
                         .append("\n");
+            }
+        }
+        if (!response.getStatusMessage().isEmpty()) {
+            for (MovilizerStatusMessage message : response.getStatusMessage()) {
+                if (403 == message.getType()) { //System id failed to authenticate
+                    sb.append(EN.AUTH_ERROR)
+                            .append("\n")
+                            .append("  - ")
+                            .append(EN.INCORRECT_CREDENTIALS)
+                            .append("'")
+                            .append(response.getSystemId())
+                            .append("'");
+                }
             }
         }
         return sb.toString();
