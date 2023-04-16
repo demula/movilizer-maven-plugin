@@ -52,7 +52,7 @@
 		<movilizer.wsdl.location>com/movilizer/plugins/maven/wsdl/MovilizerV12Wsdl11.wsdl</movilizer.wsdl.location>
 
 		<slf4j-api.version>1.7.10</slf4j-api.version>
-		<logback.version>1.1.2</logback.version>
+		<logback.version>1.2.0</logback.version>
 		<maven-plugin.version>3.2.5</maven-plugin.version>
 		<maven-project.version>2.2.1</maven-project.version>
 		<maven-plugin-annotations.version>3.4</maven-plugin-annotations.version>
